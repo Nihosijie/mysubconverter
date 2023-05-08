@@ -1,0 +1,230 @@
+allow-lan: true
+dns:
+  default-nameserver:
+  - 223.5.5.5
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-filter:
+  - '*'
+  - +.lan
+  fake-ip-range: 28.0.0.1/8
+  ipv6: true
+  listen: :1053
+  nameserver:
+  - tls://8.8.4.4#dns
+  - tls://1.0.0.1#dns
+  nameserver-policy:
+    geosite:cn,private:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  proxy-server-nameserver:
+  - https://doh.pub/dns-query
+external-controller: 0.0.0.0:9090
+external-ui: ../dashboard
+find-process-mode: strict
+geodata-mode: true
+geox-url:
+  geoip: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+  geosite: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+  mmdb: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
+global-client-fingerprint: chrome
+ipv6: true
+log-level: info
+mixed-port: 7890
+mode: rule
+p:
+  health-check: &id003
+    enable: true
+    interval: 300
+    url: https://www.gstatic.com/generate_204
+  interval: 3600
+  type: http
+pr:
+  proxies: &id001
+  - 默认
+  - 香港
+  - 台湾
+  - 日本
+  - 新加坡
+  - 美国
+  - 其它地区
+  - 全部节点
+  - 自动选择
+  - DIRECT
+  type: select
+profile:
+  store-fake-ip: true
+  store-selected: true
+proxies: null
+proxy-groups:
+- name: 默认
+  proxies:
+  - DIRECT
+  - 香港
+  - 台湾
+  - 日本
+  - 新加坡
+  - 美国
+  - 其它地区
+  - 全部节点
+  - 自动选择
+  type: select
+- name: dns
+  proxies:
+  - DIRECT
+  - 自动选择
+  - 默认
+  - 香港
+  - 台湾
+  - 日本
+  - 新加坡
+  - 美国
+  - 其它地区
+  - 全部节点
+  type: select
+- name: Google
+  proxies: *id001
+  type: select
+- name: Telegram
+  proxies: *id001
+  type: select
+- name: Twitter
+  proxies: *id001
+  type: select
+- name: pixiv
+  proxies: *id001
+  type: select
+- name: ehentai
+  proxies: *id001
+  type: select
+- name: 哔哩哔哩
+  proxies: *id001
+  type: select
+- name: 哔哩哔哩 api
+  proxies: *id001
+  type: select
+- name: 哔哩东南亚
+  proxies: *id001
+  type: select
+- name: 巴哈姆特
+  proxies: *id001
+  type: select
+- name: YouTube
+  proxies: *id001
+  type: select
+- name: NETFLIX
+  proxies: *id001
+  type: select
+- name: Spotify
+  proxies: *id001
+  type: select
+- name: github
+  proxies: *id001
+  type: select
+- name: 国内
+  proxies:
+  - DIRECT
+  - 默认
+  - 香港
+  - 台湾
+  - 日本
+  - 新加坡
+  - 美国
+  - 其它地区
+  - 全部节点
+  - 自动选择
+  type: select
+- name: 其他
+  proxies: *id001
+  type: select
+- filter: (?i)港|hk|hongkong|hong kong
+  name: 香港
+  type: select
+  use: &id002
+  - provider1
+  - provider2
+- filter: (?i)台|tw|taiwan
+  name: 台湾
+  type: select
+  use: *id002
+- filter: (?i)日本|jp|japan
+  name: 日本
+  type: select
+  use: *id002
+- filter: (?i)美|us|unitedstates|united states
+  name: 美国
+  type: select
+  use: *id002
+- filter: (?i)(新|sg|singapore)
+  name: 新加坡
+  type: select
+  use: *id002
+- filter: (?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*
+  name: 其它地区
+  type: select
+  use: *id002
+- name: 全部节点
+  type: select
+  use: *id002
+- name: 自动选择
+  tolerance: 2
+  type: url-test
+  use: *id002
+proxy-providers:
+  provider1:
+    health-check: *id003
+    interval: 3600
+    path: ./proxy_providers/provider1.yaml
+    type: http
+    url: https://a.ppconverter.eu.org/api/convert?url=https%3A%2F%2Fapi.v1.mk%2Fsub%3Ftarget%3Dclash%26url%3Dhttps%253A%252F%252Fdy.provider1.cf%252Fapi%252Fv1%252Fclient%252Fsubscribe%253Ftoken%253D9b72a7c152d6f5e99458cc16f5d8c420%26insert%3Dfalse%26config%3Dhttps%253A%252F%252Fraw.githubusercontent.com%252FMeilieage%252Fwebcdn%252Fmain%252Frule%252FArea_Media_NoAuto.ini%26emoji%3Dtrue%26list%3Dfalse%26xudp%3Dfalse%26udp%3Dfalse%26tfo%3Dfalse%26expand%3Dtrue%26scv%3Dfalse%26fdn%3Dfalse%26new_name%3Dtrue&target=clash
+  provider2:
+    health-check: *id003
+    interval: 3600
+    path: ./proxy_providers/provider2.yaml
+    type: http
+    url: https://a.ppconverter.eu.org/api/convert?url=https%3A%2F%2Fsub.download-hiccup.xyz%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D43edee3e7871334fb1a229a5bdf1a29b%23chat&target=clash
+rules:
+- GEOSITE,biliintl, 国内
+- GEOSITE,ehentai,ehentai
+- GEOSITE,github,github
+- GEOSITE,twitter,Twitter
+- GEOSITE,youtube,YouTube
+- GEOSITE,google,Google
+- GEOSITE,telegram,Telegram
+- GEOSITE,netflix,NETFLIX
+- GEOSITE,bilibili,哔哩哔哩
+- GEOSITE,bahamut,巴哈姆特
+- GEOSITE,spotify,Spotify
+- GEOSITE,geolocation-!cn,其他
+- GEOIP,google,Google
+- GEOIP,netflix,NETFLIX
+- GEOIP,telegram,Telegram
+- GEOIP,twitter,Twitter
+- GEOSITE,CN,国内
+- GEOIP,CN,国内
+- MATCH,其他
+secret: ''
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      override-destination: true
+      ports:
+      - 80
+      - 8080-8880
+    TLS:
+      ports:
+      - 443
+      - 8443
+tcp-concurrent: true
+tun:
+  auto-detect-interface: true
+  auto-route: true
+  dns-hijack:
+  - any:53
+  enable: true
+  stack: system
+unified-delay: false
+use:
+  type: select
+  use: *id002
