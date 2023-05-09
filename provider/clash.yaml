@@ -47,7 +47,6 @@ proxy-groups:
   use:
     # - provider1
     # - provider2
-- name: 
 
 # 规则集
 rule-providers:
