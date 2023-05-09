@@ -6,32 +6,32 @@ external-controller: 0.0.0.0:9090
 
 # 订阅集合
 proxy-providers:
- provider1:
-   type: http
-   path: ./profiles/provider1.yaml
-   url: ""
-   interval: 3600 
-   health-check:
-     enable: true
-     url: http://www.gstatic.com/generate_204
-     interval: 300
- provider2:
-   type: http
-   path: ./profiles/provider2.yaml
-   url: ""
-   interval: 3600 
-   health-check:
-     enable: true
-     url: http://www.gstatic.com/generate_204
-     interval: 300
+#  provider1:
+#    type: http
+#    path: ./profiles/provider1.yaml
+#    url: ""
+#    interval: 3600 
+#    health-check:
+#      enable: true
+#      url: http://www.gstatic.com/generate_204
+#      interval: 300
+#  provider2:
+#    type: http
+#    path: ./profiles/provider2.yaml
+#    url: ""
+#    interval: 3600 
+#    health-check:
+#      enable: true
+#      url: http://www.gstatic.com/generate_204
+#      interval: 300
 
 # 分组集
 proxy-groups:
 - name: 节点选择
   type: select
   use: 
-    - provider1
-    - provider2
+    # - provider1
+    # - provider2
   proxies:
     - 自动选择
     - DIRECT
@@ -40,14 +40,14 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: 3600
   use:
-    - provider1
-    - provider2
+    # - provider1
+    # - provider2
 - name: 🤖 Chatgpt
   type: select
   use:
-    - provider1
-    - provider2
-    
+    # - provider1
+    # - provider2
+- name: 
 
 # 规则集
 rule-providers:
@@ -111,6 +111,14 @@ rule-providers:
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
     path: ./profiles/rules/tld-not-cn.yaml
     interval: 86400
+  chatgpt:
+    type: http
+    behavior: domain
+    url: "https://fastly.jsdelivr.net/gh/Nihosijie/mysubconverter@main/provider/rules/chatgpt.txt"
+    path: ./profiles/rules/chatgpt.yaml
+    interval: 86400
+  
+
   telegramcidr:
     type: http
     behavior: ipcidr
@@ -176,30 +184,24 @@ rules:
   - PROCESS-NAME,transmission-qt.exe,DIRECT
   - PROCESS-NAME,uTorrent.exe,DIRECT
   - PROCESS-NAME,WebTorrent.exe,DIRECT
-  
-  
 
-  - DOMAIN-SUFFIX,freenom.com,节点选择
-  # Chatgpt
-  - DOMAIN-SUFFIX,openai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,pay.openai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,chat.openai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,challenges.cloudflare.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,auth0.openai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,platform.openai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,ai.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,invoice.stripe.com,🤖 Chatgpt
-  - DOMAIN-SUFFIX,stripe.com,🤖 Chatgpt
+  
   # 本地控制面板
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
+
+  - DOMAIN-SUFFIX,freenom.com,节点选择
+
+
+
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
 
-  # telegtam
-  
+
+
+  - RULE-SET,chatgpt,🤖 Chatgpt
   - RULE-SET,google,节点选择
   - RULE-SET,proxy,自动选择
   - RULE-SET,direct,DIRECT
