@@ -1,0 +1,9 @@
+payload:
+  # ai相关
+  - DOMAIN-SUFFIX,poe.com
+  - DOMAIN,kchatgpt-next-web.vercel.app
+  # 谷歌搜索
+  - DOMAIN-KEYWORD,www.google.
+  # cloudflare
+  - DOMAIN,dash.cloudflare.com
+  
