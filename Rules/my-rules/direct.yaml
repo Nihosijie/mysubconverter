@@ -1,4 +1,10 @@
 payload:
   # jsdeliver
   - DOMAIN-SUFFIX,jsdelivr.net
-  
+
+  # 自建cloudflare服务
+  - DOMAIN-SUFFIX,geniusk.shop,DIRECT
+
+  # 面板
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
